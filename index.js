@@ -5,6 +5,7 @@ const dotenv =require('dotenv')
 const feedbackModel = require("./model/model");
 const cors = require("cors");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const API_KEY="AIzaSyB12x7uPfrkCRcRnLNykIjUHQMbupElPS4"
 mongoose.connect("mongodb+srv://vishwas_23a:E45H46FmDel2u5PS@mydarabase.jyzdgzw.mongodb.net/FeedBack?retryWrites=true&w=majority&appName=myDaraBase");
 dotenv.config();
 app.use(cors());
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 port = 2001;
 
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 
