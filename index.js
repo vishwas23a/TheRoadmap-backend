@@ -44,8 +44,14 @@ app.post("/getData", async (req, res) => {
   }
 });
 app.get("/info", (req, res) => {
+try{
   feedbackModel.find().then((resp) => res.json(resp));
-});
+
+}catch(err)
+{
+  console.log("Something went wrong", err);
+  res.status(500).json({ error: "Failed to fetch information", details: err.message });
+}});
 app.post("/info", (req, res) => {
   feedbackModel
     .create(req.body)
