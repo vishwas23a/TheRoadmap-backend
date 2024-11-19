@@ -28,14 +28,35 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 //       res.status(500).json({ error: 'Failed to fetch information' });
 //     }
 //   });
+// app.post("/getData", async (req, res) => {
+//   const { request } = req.body;
+//   const prompt = ` ${request} and
+//     Please number each section and present the response in an organized format in detailed explanation in total.`;
+
+//   try {
+//     const result = await model.generateContent(prompt);
+//     res.json(result.response.text());
+//   } catch (error) {
+//     console.error("Error in getData endpoint:", error);
+//     res
+//       .status(500)
+//       .json({ error: "Failed to fetch information", details: error.message });
+//   }
+// });
+const cache = new Map();
+
 app.post("/getData", async (req, res) => {
   const { request } = req.body;
-  const prompt = ` ${request} and
-    Please number each section and present the response in an organized format in detailed explanation in total.`;
+
+  if (cache.has(request)) {
+    return res.json({ response: cache.get(request) });
+  }
 
   try {
     const result = await model.generateContent(prompt);
-    res.json(result.response.text());
+    const responseText = result.response.text();
+    cache.set(request, responseText);
+    res.json(responseText);
   } catch (error) {
     console.error("Error in getData endpoint:", error);
     res
@@ -43,6 +64,7 @@ app.post("/getData", async (req, res) => {
       .json({ error: "Failed to fetch information", details: error.message });
   }
 });
+
 app.get("/info", (req, res) => {
 try{
   feedbackModel.find().then((resp) => res.json(resp));
