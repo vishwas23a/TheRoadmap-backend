@@ -45,7 +45,10 @@ app.post("/getData", async (req, res) => {
 });
 app.get("/info", (req, res) => {
 try{
-  feedbackModel.find().then((resp) => res.json(resp));
+  feedbackModel.find()
+  .then((resp) => {
+    console.log(resp)
+    res.json(resp)});
 
 }catch(err)
 {
