@@ -8,7 +8,11 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const API_KEY="AIzaSyB12x7uPfrkCRcRnLNykIjUHQMbupElPS4"
 mongoose.connect("mongodb+srv://vishwas_23a:wnSC74rtg4NGsYRt@mydarabase.jyzdgzw.mongodb.net/FeedBack?retryWrites=true&w=majority&appName=myDaraBase");
 dotenv.config();
-app.use(cors());
+app.use(cors({
+  origin: "https://theroadmap01.netlify.app", // Replace with your front-end origin
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 port = 2001;
