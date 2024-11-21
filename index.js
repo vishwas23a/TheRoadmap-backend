@@ -36,6 +36,7 @@ app.post("/getData", async (req, res) => {
   try {
     const result = await model.generateContent(prompt);
     res.json(result.response.text());
+    console.log("Generated text:", result.response.text());
   } catch (error) {
     console.error("Error in getData endpoint:", error);
     res
