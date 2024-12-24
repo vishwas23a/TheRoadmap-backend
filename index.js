@@ -5,8 +5,8 @@ const dotenv =require('dotenv')
 const feedbackModel = require("./model/model");
 const cors = require("cors");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const API_KEY="AIzaSyB12x7uPfrkCRcRnLNykIjUHQMbupElPS4"
-mongoose.connect("mongodb+srv://vishwas_23a:wnSC74rtg4NGsYRt@mydarabase.jyzdgzw.mongodb.net/FeedBack?retryWrites=true&w=majority&appName=myDaraBase");
+const API_KEY=process.env.API_KEY
+mongoose.connect(process.env.MONGO_URL);
 dotenv.config();
 app.use(cors({
   origin: "https://theroadmap01.netlify.app", // Replace with your front-end origin
@@ -21,17 +21,6 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 
-//     try {
-//       const [response] = await client.generateText({
-//         model: 'models/text-bison-001',
-//         prompt: prompt,
-//       });
-//       res.json(response.text);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error: 'Failed to fetch information' });
-//     }
-//   });
 app.post("/getData", async (req, res) => {
   const { request } = req.body;
   const prompt = ` ${request} and
