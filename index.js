@@ -1,18 +1,21 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv =require('dotenv')
-const feedbackModel = require("./model/model");
-const cors = require("cors");
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const API_KEY=process.env.API_KEY
-mongoose.connect(process.env.MONGO_URL);
-dotenv.config();
+
 app.use(cors({
   origin: "https://theroadmap01.netlify.app", // Replace with your front-end origin
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
+const feedbackModel = require("./model/model");
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+dotenv.config();
+const API_KEY=process.env.API_KEY
+mongoose.connect(process.env.MONGO_URL);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 port = 2001;
